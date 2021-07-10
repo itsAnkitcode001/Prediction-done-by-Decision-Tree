@@ -1,0 +1,35 @@
+from google.colab import drive
+drive.mount('/content/drive')
+import pandas as pd
+import numpy as np
+import matplotlib.pyplot as plt
+import seaborn as sns
+from sklearn.metrics import accuracy_score,confusion_matrix
+from sklearn.model_selection import train_test_split
+from sklearn.tree import DecisionTreeClassifier
+dfs=pd.read_csv('/content/drive/MyDrive/Colab Notebooks/Data/Iris.csv')
+dfs.head()
+dfs.head(10)
+dfs.shape
+dfs[dfs.isnull().any(axis=1)].head()
+#in the result you can see there is no row in the data in which having any null value
+dfs.drop("Id", axis=1)
+dfs.describe()
+#thing function will help us by giving value in which we can see the variation in the data as well as the range of data in which sample value is lying
+X=dfs.iloc[:, 1:-1]
+print(X)
+Y=dfs.iloc[:, -1]
+print(Y)
+X_train,X_test, Y_train, Y_test=train_test_split(X, Y, test_size=0.3, random_state=100)
+print(X_train)
+Classifier=DecisionTreeClassifier(criterion='entropy') 
+Classifier.fit(X_train, Y_train)
+#Decision tree formation on behalf of entropy or you can dono it by using gini criteria also
+Y_predict=Classifier.predict(X_test)
+accuracy_score(Y_test, Y_predict)*100
+confusion_matrix(Y_test, Y_predict)
+from sklearn import tree
+feat=["SepalLengthCm", "SepalWidthCm"," PitalLengthCm", "PitalWidthCm"]
+Cls=["Iris-setosa", "Iris-versicolour", "Iris-virginica"]
+fig, axes=plt.subplots(nrows=1, ncols=1, figsize=(4, 4), dpi=300)
+tree.plot_tree(Classifier,feature_names=feat,class_names=Cls,filled=True)
