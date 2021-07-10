@@ -21,7 +21,10 @@ print(X)
 Y=dfs.iloc[:, -1]
 print(Y)
 X_train,X_test, Y_train, Y_test=train_test_split(X, Y, test_size=0.3, random_state=100)
-print(X_train)
+print("X_train is\n",X_train.shape)
+print("X_test is\n",X_test.shape)
+print("Y_train is\n",Y_train.shape)
+print("Y_test is",Y_test.shape)
 Classifier=DecisionTreeClassifier(criterion='entropy') 
 Classifier.fit(X_train, Y_train)
 #Decision tree formation on behalf of entropy or you can dono it by using gini criteria also
